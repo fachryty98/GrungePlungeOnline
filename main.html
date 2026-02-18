@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GrungePlunge Online — Smells Like Chain Spirit</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;700&display=swap');
+    :root {
+      --grunge-black: #0d0b09;
+      --grunge-brown: #2a231b;
+      --grunge-rust: #6b4423;
+      --grunge-mud: #4a3f35;
+      --grunge-cream: #c9b896;
+      --grunge-dust: #8b7355;
+      --grunge-blood: #8b2513;
+      --grunge-neon: #7cfc00;
+      --grunge-crack: #3d3529;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Special Elite', monospace;
+      background: var(--grunge-black);
+      color: var(--grunge-cream);
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 20% 80%, var(--grunge-rust) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, var(--grunge-mud) 0%, transparent 40%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30z' fill='%232a231b' fill-opacity='0.15'/%3E%3C/svg%3E");
+    }
+    .noise::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
