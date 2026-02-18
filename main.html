@@ -74,3 +74,41 @@
       font-family: 'Oswald', sans-serif;
       padding: 0.5rem 1.25rem;
       background: var(--grunge-rust);
+      border: 2px solid var(--grunge-dust);
+      color: var(--grunge-cream);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn:hover {
+      background: var(--grunge-blood);
+      color: #fff;
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-primary { background: var(--grunge-blood); border-color: var(--grunge-rust); }
+    .btn-primary:hover { background: #a52a2a; }
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--grunge-mud);
+    }
+    .tabs button {
+      font-family: 'Oswald', sans-serif;
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--grunge-dust);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+    .tabs button:hover { color: var(--grunge-cream); }
+    .tabs button.active {
