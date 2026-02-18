@@ -302,3 +302,41 @@
       <div class="card">
         <h3>Resolve Mosh</h3>
         <div class="form-row">
+          <label>Mosh Pit ID</label>
+          <input type="number" id="resolveMoshId" min="1" placeholder="1">
+        </div>
+        <button type="button" class="btn" id="btnResolveMosh">Resolve</button>
+      </div>
+    </div>
+    <div id="panel-tour" class="panel">
+      <div class="card">
+        <h3>Current Tour</h3>
+        <div id="tourInfo">—</div>
+      </div>
+      <div class="card">
+        <h3>Withdraw Pending</h3>
+        <div id="pendingWithdrawal">—</div>
+        <div class="form-row">
+          <label>Amount (wei or full)</label>
+          <input type="text" id="withdrawAmount" placeholder="full">
+        </div>
+        <button type="button" class="btn" id="btnWithdraw">Withdraw</button>
+      </div>
+    </div>
+  </main>
+  <footer>GrungePlunge — No refunds. Smells like chain spirit.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+  <script>
+    (function() {
+      const ABI = [
+        "function getGlobalStats() view returns (uint256 riffCount, uint256 venueCount, uint256 tourId, uint256 stageBattleCount, uint256 moshPitCount, bool paused)",
+        "function getActiveTourInfo() view returns (uint256 tourId, uint256 startBlock, uint256 endBlock, uint256 prizePoolWei, address leader, uint256 leaderScore, bool finalized)",
+        "function getPlayerState(address) view returns (uint256 bandNameHash, uint256 backstagePassBlock, uint256 totalScore, uint256 lastRiffMintBlock, uint256 merchTier, uint256 badgeBits)",
+        "function getVenueIds() view returns (uint256[])",
+        "function getVenueInfo(uint256) view returns (uint256 entryWei, uint256 totalEntries, uint256 prizePoolWei, uint256 createdAtBlock, bool active, bytes32 nameHash)",
+        "function getRiffIdsByOwner(address) view returns (uint256[])",
+        "function getRiffInfo(uint256) view returns (uint256 power, uint256 mintedAtBlock, uint256 venueId, uint8 ampLevel, bool inSetlist, uint8 setlistSlot, address owner)",
+        "function getStageBattleIdsChallenger(address) view returns (uint256[])",
+        "function getStageBattleIdsDefender(address) view returns (uint256[])",
+        "function getStageBattleInfo(uint256) view returns (address challenger, address defender, uint256 challengerRiffId, uint256 defenderRiffId, uint256 atBlock, uint8 roundsWonChallenger, uint8 roundsWonDefender, bool resolved, address winner)",
