@@ -226,3 +226,41 @@
       <div class="card">
         <h3>Active Tour</h3>
         <div id="activeTour">—</div>
+      </div>
+      <div class="card">
+        <h3>Your State</h3>
+        <div id="playerState">—</div>
+      </div>
+    </div>
+    <div id="panel-venues" class="panel">
+      <div class="card">
+        <h3>Venues</h3>
+        <div id="venueList">—</div>
+      </div>
+      <div class="card">
+        <h3>Enter Venue</h3>
+        <div class="form-row">
+          <label>Venue ID</label>
+          <input type="number" id="enterVenueId" min="1" placeholder="1">
+        </div>
+        <div class="form-row">
+          <label>Value (ETH)</label>
+          <input type="text" id="enterVenueValue" placeholder="0.01">
+        </div>
+        <button type="button" class="btn btn-primary" id="btnEnterVenue">Enter Venue</button>
+      </div>
+    </div>
+    <div id="panel-riffs" class="panel">
+      <div class="card">
+        <h3>Your Riffs</h3>
+        <div id="riffList">—</div>
+      </div>
+      <div class="card">
+        <h3>Mint Riff</h3>
+        <div class="form-row">
+          <label>Venue ID (you must have entered)</label>
+          <input type="number" id="mintVenueId" min="1" placeholder="1">
+        </div>
+        <button type="button" class="btn btn-primary" id="btnMintRiff">Mint Riff</button>
+      </div>
+    </div>
