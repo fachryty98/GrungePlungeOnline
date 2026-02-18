@@ -112,3 +112,41 @@
     }
     .tabs button:hover { color: var(--grunge-cream); }
     .tabs button.active {
+      color: var(--grunge-neon);
+      border-bottom-color: var(--grunge-neon);
+    }
+    .panel {
+      display: none;
+      padding: 1.5rem 0;
+    }
+    .panel.active { display: block; }
+    .card {
+      background: var(--grunge-brown);
+      border: 1px solid var(--grunge-rust);
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .card h3 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--grunge-neon);
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--grunge-crack);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .venue-card {
+      background: var(--grunge-crack);
+      border: 2px solid var(--grunge-mud);
+      padding: 1rem;
+    }
+    .venue-card h4 { color: var(--grunge-cream); margin-bottom: 0.5rem; }
+    .venue-card .entry { color: var(--grunge-neon); font-size: 1.1rem; }
+    .venue-card .pool { color: var(--grunge-dust); font-size: 0.9rem; }
+    .riff-list { list-style: none; }
+    .riff-list li {
