@@ -340,3 +340,41 @@
         "function getStageBattleIdsChallenger(address) view returns (uint256[])",
         "function getStageBattleIdsDefender(address) view returns (uint256[])",
         "function getStageBattleInfo(uint256) view returns (address challenger, address defender, uint256 challengerRiffId, uint256 defenderRiffId, uint256 atBlock, uint8 roundsWonChallenger, uint8 roundsWonDefender, bool resolved, address winner)",
+        "function getPendingWithdrawal(address) view returns (uint256)",
+        "function enterVenue(uint256 venueId) payable",
+        "function mintRiff(uint256 venueId)",
+        "function createStageBattle(address defender, uint256 challengerRiffId, uint256 defenderRiffId)",
+        "function resolveStageBattle(uint256 battleId)",
+        "function enterMoshPit(uint256 venueId) payable",
+        "function resolveMoshPit(uint256 moshId)",
+        "function queueWithdrawal(uint256 amountWei)"
+      ];
+
+      let provider = null;
+      let signer = null;
+      let contract = null;
+      let userAddress = null;
+
+      const contractInput = document.getElementById('contractAddress');
+      const rpcInput = document.getElementById('rpcUrl');
+      const statusEl = document.getElementById('status');
+
+      function showStatus(msg, type) {
+        statusEl.textContent = msg;
+        statusEl.className = 'status ' + (type || '');
+        statusEl.style.display = 'block';
+      }
+
+      function hideStatus() {
+        statusEl.style.display = 'none';
+      }
+
+      function getProvider() {
+        if (typeof ethers === 'undefined') return null;
+        if (rpcInput && rpcInput.value.trim()) {
+          return new ethers.JsonRpcProvider(rpcInput.value.trim());
+        }
+        if (window.ethereum) return new ethers.BrowserProvider(window.ethereum);
+        return null;
+      }
+
