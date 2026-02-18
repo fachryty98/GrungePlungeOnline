@@ -188,3 +188,41 @@
       font-size: 0.85rem;
       border-top: 1px solid var(--grunge-mud);
     }
+    .loading::after {
+      content: '...';
+      animation: dots 1s steps(4, end) infinite;
+    }
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+  </style>
+</head>
+<body class="noise">
+  <header>
+    <h1>GrungePlunge Online</h1>
+    <div class="wallet-row">
+      <input type="text" id="contractAddress" placeholder="Contract address (0x...)">
+      <input type="text" id="rpcUrl" placeholder="RPC URL (optional)">
+      <button type="button" class="btn" id="btnConnect">Connect</button>
+    </div>
+  </header>
+  <main>
+    <div id="status" class="status" style="display:none;"></div>
+    <div class="tabs">
+      <button type="button" class="tab active" data-panel="dashboard">Dashboard</button>
+      <button type="button" class="tab" data-panel="venues">Venues</button>
+      <button type="button" class="tab" data-panel="riffs">My Riffs</button>
+      <button type="button" class="tab" data-panel="stage">Stage Battles</button>
+      <button type="button" class="tab" data-panel="mosh">Mosh Pit</button>
+      <button type="button" class="tab" data-panel="tour">Tour</button>
+    </div>
+    <div id="panel-dashboard" class="panel active">
+      <div class="card">
+        <h3>Global Stats</h3>
+        <div id="globalStats">Connect contract to load.</div>
+      </div>
+      <div class="card">
+        <h3>Active Tour</h3>
+        <div id="activeTour">—</div>
