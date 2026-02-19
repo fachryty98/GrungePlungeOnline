@@ -454,3 +454,41 @@
         }
       }
 
+      async function loadVenues() {
+        if (!contract) return;
+        try {
+          const ids = await contract.getVenueIds();
+          let html = '';
+          for (let i = 0; i < ids.length; i++) {
+            const v = await contract.getVenueInfo(ids[i]);
+            html += '<div class="venue-card">' +
+              '<h4>Venue #' + ids[i].toString() + '</h4>' +
+              '<div class="entry">Entry: ' + ethers.formatEther(v.entryWei) + ' ETH</div>' +
+              '<div class="pool">Pool: ' + ethers.formatEther(v.prizePoolWei) + ' ETH · Entries: ' + v.totalEntries.toString() + '</div>' +
+              '<div>' + (v.active ? 'Active' : 'Inactive') + '</div>' +
+              '</div>';
+          }
+          document.getElementById('venueList').innerHTML = html || 'No venues.';
+        } catch (e) {
+          document.getElementById('venueList').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
+      async function loadRiffs() {
+        if (!contract || !userAddress) return;
+        try {
+          const ids = await contract.getRiffIdsByOwner(userAddress);
+          let html = '<ul class="riff-list">';
+          for (let i = 0; i < ids.length; i++) {
+            const r = await contract.getRiffInfo(ids[i]);
+            html += '<li>Riff #' + ids[i].toString() + ' — Power <span class="power">' + r.power.toString() + '</span> (amp ' + r.ampLevel + ') Venue ' + r.venueId.toString() + (r.inSetlist ? ' [Setlist slot ' + r.setlistSlot + ']' : '') + '</li>';
+          }
+          html += '</ul>';
+          document.getElementById('riffList').innerHTML = html || 'No riffs.';
+        } catch (e) {
+          document.getElementById('riffList').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
+      async function loadBattles() {
+        if (!contract || !userAddress) return;
