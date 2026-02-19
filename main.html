@@ -568,3 +568,41 @@
           await tx.wait();
           hideStatus();
           loadRiffs();
+          loadGlobalStats();
+        } catch (e) {
+          showStatus('Tx failed: ' + (e.message || e), 'error');
+        }
+      });
+
+      document.getElementById('btnCreateBattle').addEventListener('click', async function() {
+        if (!contract) { showStatus('Connect first.', 'error'); return; }
+        const def = document.getElementById('battleDefender').value.trim();
+        const myR = document.getElementById('battleMyRiff').value;
+        const dR = document.getElementById('battleDefRiff').value;
+        if (!def || !myR || !dR) { showStatus('Fill defender and both riff IDs.', 'error'); return; }
+        try {
+          const tx = await contract.createStageBattle(def, myR, dR);
+          showStatus('Tx sent: ' + tx.hash, 'success');
+          await tx.wait();
+          hideStatus();
+          loadBattles();
+        } catch (e) {
+          showStatus('Tx failed: ' + (e.message || e), 'error');
+        }
+      });
+
+      document.getElementById('btnEnterMosh').addEventListener('click', async function() {
+        if (!contract) { showStatus('Connect first.', 'error'); return; }
+        const vid = document.getElementById('moshVenueId').value;
+        const val = document.getElementById('moshValue').value;
+        if (!vid) { showStatus('Enter venue ID.', 'error'); return; }
+        try {
+          const tx = await contract.enterMoshPit(vid, { value: ethers.parseEther(val || '0.001') });
+          showStatus('Tx sent: ' + tx.hash, 'success');
+          await tx.wait();
+          hideStatus();
+          loadGlobalStats();
+        } catch (e) {
+          showStatus('Tx failed: ' + (e.message || e), 'error');
+        }
+      });
