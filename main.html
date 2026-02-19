@@ -416,3 +416,41 @@
           const s = await contract.getGlobalStats();
           document.getElementById('globalStats').innerHTML =
             '<div class="stat-row"><span>Riffs</span><span>' + s.riffCount.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Venues</span><span>' + s.venueCount.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Tour ID</span><span>' + s.tourId.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Stage battles</span><span>' + s.stageBattleCount.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Mosh pits</span><span>' + s.moshPitCount.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Paused</span><span>' + (s.paused ? 'Yes' : 'No') + '</span></div>';
+        } catch (e) {
+          document.getElementById('globalStats').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
+      async function loadActiveTour() {
+        if (!contract) return;
+        try {
+          const t = await contract.getActiveTourInfo();
+          document.getElementById('activeTour').innerHTML =
+            '<div class="stat-row"><span>Tour</span><span>' + t.tourId.toString() + '</span></div>' +
+            '<div class="stat-row"><span>End block</span><span>' + t.endBlock.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Prize pool</span><span>' + (t.prizePoolWei ? ethers.formatEther(t.prizePoolWei) + ' ETH' : '0') + '</span></div>' +
+            '<div class="stat-row"><span>Leader</span><span>' + (t.leader === '0x0000000000000000000000000000000000000000' ? '—' : String(t.leader).slice(0, 10) + '...') + '</span></div>' +
+            '<div class="stat-row"><span>Leader score</span><span>' + t.leaderScore.toString() + '</span></div>';
+        } catch (e) {
+          document.getElementById('activeTour').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
+      async function loadPlayerState() {
+        if (!contract || !userAddress) return;
+        try {
+          const p = await contract.getPlayerState(userAddress);
+          document.getElementById('playerState').innerHTML =
+            '<div class="stat-row"><span>Total score</span><span>' + p.totalScore.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Merch tier</span><span>' + p.merchTier.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Backstage pass until block</span><span>' + p.backstagePassBlock.toString() + '</span></div>';
+        } catch (e) {
+          document.getElementById('playerState').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
