@@ -606,3 +606,39 @@
           showStatus('Tx failed: ' + (e.message || e), 'error');
         }
       });
+
+      document.getElementById('btnResolveMosh').addEventListener('click', async function() {
+        if (!contract) { showStatus('Connect first.', 'error'); return; }
+        const id = document.getElementById('resolveMoshId').value;
+        if (!id) { showStatus('Enter mosh ID.', 'error'); return; }
+        try {
+          const tx = await contract.resolveMoshPit(id);
+          showStatus('Tx sent: ' + tx.hash, 'success');
+          await tx.wait();
+          hideStatus();
+          loadPendingWithdrawal();
+        } catch (e) {
+          showStatus('Tx failed: ' + (e.message || e), 'error');
+        }
+      });
+
+      document.getElementById('btnWithdraw').addEventListener('click', async function() {
+        if (!contract) { showStatus('Connect first.', 'error'); return; }
+        const amt = document.getElementById('withdrawAmount').value.trim();
+        try {
+          const pending = await contract.getPendingWithdrawal(userAddress);
+          const wei = amt === 'full' || !amt ? pending : BigInt(amt);
+          if (wei === 0n) { showStatus('Nothing to withdraw.', 'error'); return; }
+          const tx = await contract.queueWithdrawal(wei);
+          showStatus('Tx sent: ' + tx.hash, 'success');
+          await tx.wait();
+          hideStatus();
+          loadPendingWithdrawal();
+        } catch (e) {
+          showStatus('Tx failed: ' + (e.message || e), 'error');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
