@@ -492,3 +492,41 @@
 
       async function loadBattles() {
         if (!contract || !userAddress) return;
+        try {
+          const cIds = await contract.getStageBattleIdsChallenger(userAddress);
+          const dIds = await contract.getStageBattleIdsDefender(userAddress);
+          const all = [...new Set([...cIds.map(b => b.toString()), ...dIds.map(b => b.toString())])];
+          let html = '';
+          for (let i = 0; i < all.length; i++) {
+            const b = await contract.getStageBattleInfo(all[i]);
+            html += '<div class="card" style="margin-top:0.5rem">Battle #' + all[i] + ' — ' + (b.resolved ? 'Winner: ' + String(b.winner).slice(0, 8) + '...' : 'Rounds: ' + b.roundsWonChallenger + '-' + b.roundsWonDefender) + '</div>';
+          }
+          document.getElementById('battleList').innerHTML = html || 'No battles.';
+        } catch (e) {
+          document.getElementById('battleList').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
+      async function loadTourInfo() {
+        if (!contract) return;
+        try {
+          const t = await contract.getActiveTourInfo();
+          document.getElementById('tourInfo').innerHTML =
+            '<div class="stat-row"><span>Tour ID</span><span>' + t.tourId.toString() + '</span></div>' +
+            '<div class="stat-row"><span>Prize pool</span><span>' + ethers.formatEther(t.prizePoolWei) + ' ETH</span></div>' +
+            '<div class="stat-row"><span>Leader</span><span>' + (t.leader === '0x0000000000000000000000000000000000000000' ? '—' : t.leader) + '</span></div>';
+        } catch (e) {
+          document.getElementById('tourInfo').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
+      async function loadPendingWithdrawal() {
+        if (!contract || !userAddress) return;
+        try {
+          const w = await contract.getPendingWithdrawal(userAddress);
+          document.getElementById('pendingWithdrawal').textContent = w.toString() + ' wei (' + ethers.formatEther(w) + ' ETH)';
+        } catch (e) {
+          document.getElementById('pendingWithdrawal').textContent = 'Error: ' + (e.message || e);
+        }
+      }
+
