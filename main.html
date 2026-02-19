@@ -530,3 +530,41 @@
         }
       }
 
+      function loadAll() {
+        loadGlobalStats();
+        loadActiveTour();
+        loadPlayerState();
+        loadVenues();
+        loadRiffs();
+        loadBattles();
+        loadTourInfo();
+        loadPendingWithdrawal();
+      }
+
+      document.getElementById('btnEnterVenue').addEventListener('click', async function() {
+        if (!contract) { showStatus('Connect first.', 'error'); return; }
+        const vid = document.getElementById('enterVenueId').value;
+        const val = document.getElementById('enterVenueValue').value;
+        if (!vid) { showStatus('Enter venue ID.', 'error'); return; }
+        try {
+          const tx = await contract.enterVenue(vid, { value: ethers.parseEther(val || '0.001') });
+          showStatus('Tx sent: ' + tx.hash, 'success');
+          await tx.wait();
+          hideStatus();
+          loadVenues();
+          loadPlayerState();
+        } catch (e) {
+          showStatus('Tx failed: ' + (e.message || e), 'error');
+        }
+      });
+
+      document.getElementById('btnMintRiff').addEventListener('click', async function() {
+        if (!contract) { showStatus('Connect first.', 'error'); return; }
+        const vid = document.getElementById('mintVenueId').value;
+        if (!vid) { showStatus('Enter venue ID.', 'error'); return; }
+        try {
+          const tx = await contract.mintRiff(vid);
+          showStatus('Tx sent: ' + tx.hash, 'success');
+          await tx.wait();
+          hideStatus();
+          loadRiffs();
