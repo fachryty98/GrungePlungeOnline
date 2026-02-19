@@ -378,3 +378,41 @@
         return null;
       }
 
+      document.getElementById('btnConnect').addEventListener('click', async function() {
+        const addr = contractInput?.value?.trim();
+        if (!addr || !addr.startsWith('0x')) {
+          showStatus('Enter a valid contract address (0x...).', 'error');
+          return;
+        }
+        try {
+          provider = getProvider();
+          if (!provider) {
+            showStatus('No wallet or RPC. Install MetaMask or set RPC.', 'error');
+            return;
+          }
+          signer = await provider.getSigner();
+          userAddress = await signer.getAddress();
+          contract = new ethers.Contract(addr, ABI, signer);
+          showStatus('Connected. Contract: ' + addr.slice(0, 10) + '...', 'success');
+          loadAll();
+        } catch (e) {
+          showStatus('Connect failed: ' + (e.message || e), 'error');
+        }
+      });
+
+      function tabSwitch() {
+        document.querySelectorAll('.tab').forEach(t => {
+          t.classList.toggle('active', t.dataset.panel === this.dataset.panel);
+        });
+        document.querySelectorAll('.panel').forEach(p => {
+          p.classList.toggle('active', p.id === 'panel-' + this.dataset.panel);
+        });
+      }
+      document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', tabSwitch));
+
+      async function loadGlobalStats() {
+        if (!contract) return;
+        try {
+          const s = await contract.getGlobalStats();
+          document.getElementById('globalStats').innerHTML =
+            '<div class="stat-row"><span>Riffs</span><span>' + s.riffCount.toString() + '</span></div>' +
